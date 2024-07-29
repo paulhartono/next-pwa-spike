@@ -1,5 +1,4 @@
 import { MutationSpike } from './_components/mutation-spike'
-import { SimpleForm } from './_components/simple-form'
 
 export default function TimePage() {
   return (

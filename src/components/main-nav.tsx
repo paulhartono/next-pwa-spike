@@ -22,6 +22,9 @@ export function MainNav() {
         <Link href={'/csrpost'} className="border-gray-700 border-2 p-2 mr-2">
           CSR-POST
         </Link>
+        <Link href={'/ssrpost'} className="border-gray-700 border-2 p-2 mr-2">
+          SSR-POST
+        </Link>
       </nav>
     </div>
   )
