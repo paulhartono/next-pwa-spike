@@ -11,8 +11,32 @@ declare global {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined
   }
 }
-
 declare const self: ServiceWorkerGlobalScope
+
+const queue = new BackgroundSyncQueue('myQueueName')
+
+self.addEventListener('fetch', (event) => {
+  // Add in your own criteria here to return early if this
+  // isn't a request that should use background sync.
+  if (event.request.method !== 'POST') {
+    console.log('[fetch] returned early', event.request.url)
+    return
+  }
+
+  const backgroundSync = async () => {
+    try {
+      console.log('[fetch] about to call request', event.request.url)
+      const response = await fetch(event.request.clone())
+      return response
+    } catch (error) {
+      console.log('[fetch] put request to queue', event.request.url)
+      await queue.pushRequest({ request: event.request })
+      return Response.error()
+    }
+  }
+
+  event.respondWith(backgroundSync())
+})
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -30,28 +54,6 @@ const serwist = new Serwist({
       },
     ],
   },
-})
-
-const queue = new BackgroundSyncQueue('nextPwaSpikeQueue')
-
-self.addEventListener('fetch', (event) => {
-  // Add in your own criteria here to return early if this
-  // isn't a request that should use background sync.
-  if (event.request.method !== 'POST') {
-    return
-  }
-
-  const backgroundSync = async () => {
-    try {
-      const response = await fetch(event.request.clone())
-      return response
-    } catch (error) {
-      await queue.pushRequest({ request: event.request })
-      return Response.error()
-    }
-  }
-
-  event.respondWith(backgroundSync())
 })
 
 serwist.addEventListeners()

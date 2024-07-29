@@ -13,7 +13,7 @@ export default async (phase) => {
       // use something else that works, such as "service-worker/index.ts".
       swSrc: 'src/service-worker/sw.ts',
       swDest: 'public/sw.js',
-      reloadOnOnline: true,
+      reloadOnOnline: false,
     })
     return withSerwist(nextConfig)
   }

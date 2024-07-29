@@ -8,6 +8,5 @@ export default async function getProducts() {
     throw new Error('Failed to fetch products data')
   }
 
-  await sleep(3000)
   return res.json()
 }

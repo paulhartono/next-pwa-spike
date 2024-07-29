@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 
 export function useGetProducts() {
   return useQuery({
-    queryFn: async () => getProducts(),
+    queryFn: async () => await getProducts(),
     queryKey: ['products'],
   })
 }

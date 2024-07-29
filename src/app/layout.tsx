@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: 'A Spike for PWA App',
   category: 'website',
   generator: 'Next.js', // framework used
-  manifest: '/manifest.json',
 }
 
 export default function RootLayout({

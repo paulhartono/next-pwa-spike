@@ -11,7 +11,7 @@ export function ProductListCSR() {
 
   if (error) return <div>Error when trying to fetch products.</div>
 
-  if (isLoading) return <DefaultLoading />
+  if (isLoading || !data) return <DefaultLoading />
 
   return (
     <Suspense fallback={<DefaultLoading />}>
